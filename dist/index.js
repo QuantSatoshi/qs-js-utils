@@ -23,9 +23,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.searchUtils = exports.isTimeWithinRange = exports.getDay = exports.GzReader = void 0;
+exports.searchUtils = exports.isTimeWithinRange = exports.getDay = exports.GzWriter = exports.GzReader = void 0;
 var gzReader_1 = require("./utils/gzReader");
 Object.defineProperty(exports, "GzReader", { enumerable: true, get: function () { return gzReader_1.GzReader; } });
+var gzWriter_1 = require("./utils/gzWriter");
+Object.defineProperty(exports, "GzWriter", { enumerable: true, get: function () { return gzWriter_1.GzWriter; } });
 var dateUtils_1 = require("./utils/dateUtils");
 Object.defineProperty(exports, "getDay", { enumerable: true, get: function () { return dateUtils_1.getDay; } });
 Object.defineProperty(exports, "isTimeWithinRange", { enumerable: true, get: function () { return dateUtils_1.isTimeWithinRange; } });

@@ -14,10 +14,10 @@ const fs = require('fs');
 const zlib = require('zlib');
 const readline = require('readline');
 class GzReader {
-    constructor(fileName, debug) {
+    constructor(fileName, debug = true) {
         this.unzip = zlib.createGunzip();
         this.fileName = fileName;
-        this.debug = !!debug;
+        this.debug = debug;
         if (this.debug) {
             console.log(`gunzip ${fileName}`);
         }

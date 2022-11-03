@@ -8,9 +8,9 @@ export class GzReader {
   fileName: string;
   debug: boolean;
 
-  constructor(fileName: string, debug?: boolean) {
+  constructor(fileName: string, debug: boolean = true) {
     this.fileName = fileName;
-    this.debug = !!debug;
+    this.debug = debug;
     if (this.debug) {
       console.log(`gunzip ${fileName}`);
     }
