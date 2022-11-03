@@ -26,3 +26,39 @@ export function isSymbol(value: any) {
   const type = typeof value;
   return type == 'symbol' || (type === 'object' && value != null && getTag(value) == '[object Symbol]');
 }
+
+export function isArray(a: any) {
+  return !!a && a.constructor === Array;
+}
+
+export function isObject(a: any) {
+  return !!a && a.constructor === Object;
+}
+
+export function isKeyUnique(items: Record<string, any>[], key: string) {
+  const map: Record<string, number> = {};
+  for (let item of items) {
+    if (map[item[key]]) return false;
+    map[item[key]] = 1;
+  }
+  return true;
+}
+
+export function orderObjectDeep(dataFiltered: any) {
+  const dataOrdered: any = {};
+  Object.keys(dataFiltered)
+    .sort()
+    .forEach(function (key) {
+      if (isObject(dataFiltered[key]) && !isArray(dataFiltered[key])) {
+        dataOrdered[key] = orderObjectDeep(dataFiltered[key]);
+      } else {
+        dataOrdered[key] = dataFiltered[key];
+      }
+    });
+  return dataOrdered;
+}
+
+export function getMemoryUsage() {
+  const usedMemory = process.memoryUsage().heapUsed / 1024 / 1024;
+  return Math.round(usedMemory * 100) / 100;
+}

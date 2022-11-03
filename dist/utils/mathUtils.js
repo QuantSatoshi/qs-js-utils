@@ -54,9 +54,7 @@ function maxBy(array, iteratee) {
     let computed;
     for (const value of array) {
         const current = iteratee(value);
-        if (current != null && (computed === undefined
-            ? (current === current && !(0, commonUtils_1.isSymbol)(current))
-            : (current > computed))) {
+        if (current != null && (computed === undefined ? current === current && !(0, commonUtils_1.isSymbol)(current) : current > computed)) {
             computed = current;
             result = value;
         }
@@ -73,9 +71,7 @@ function minBy(array, iteratee) {
     let computed;
     for (const value of array) {
         const current = iteratee(value);
-        if (current != null && (computed === undefined
-            ? (current === current && !(0, commonUtils_1.isSymbol)(current))
-            : (current < computed))) {
+        if (current != null && (computed === undefined ? current === current && !(0, commonUtils_1.isSymbol)(current) : current < computed)) {
             computed = current;
             result = value;
         }

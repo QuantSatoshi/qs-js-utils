@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isSymbol = exports.getTag = exports.safeJsonParse = exports.pause = void 0;
+exports.getMemoryUsage = exports.orderObjectDeep = exports.isKeyUnique = exports.isObject = exports.isArray = exports.isSymbol = exports.getTag = exports.safeJsonParse = exports.pause = void 0;
 const textUtils_1 = require("./textUtils");
 function pause(ms) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -41,3 +41,41 @@ function isSymbol(value) {
     return type == 'symbol' || (type === 'object' && value != null && getTag(value) == '[object Symbol]');
 }
 exports.isSymbol = isSymbol;
+function isArray(a) {
+    return (!!a) && (a.constructor === Array);
+}
+exports.isArray = isArray;
+function isObject(a) {
+    return (!!a) && (a.constructor === Object);
+}
+exports.isObject = isObject;
+function isKeyUnique(items, key) {
+    const map = {};
+    for (let item of items) {
+        if (map[item[key]])
+            return false;
+        map[item[key]] = 1;
+    }
+    return true;
+}
+exports.isKeyUnique = isKeyUnique;
+function orderObjectDeep(dataFiltered) {
+    const dataOrdered = {};
+    Object.keys(dataFiltered)
+        .sort()
+        .forEach(function (key) {
+        if (isObject(dataFiltered[key]) && !isArray(dataFiltered[key])) {
+            dataOrdered[key] = orderObjectDeep(dataFiltered[key]);
+        }
+        else {
+            dataOrdered[key] = dataFiltered[key];
+        }
+    });
+    return dataOrdered;
+}
+exports.orderObjectDeep = orderObjectDeep;
+function getMemoryUsage() {
+    const usedMemory = process.memoryUsage().heapUsed / 1024 / 1024;
+    return Math.round(usedMemory * 100) / 100;
+}
+exports.getMemoryUsage = getMemoryUsage;
