@@ -50,7 +50,7 @@ class GzWriter {
     writeMany(data) {
         return __awaiter(this, void 0, void 0, function* () {
             this.writing = true;
-            if (!this.gz.write(data.map(row => JSON.stringify(row)).join('\n') + '\n')) {
+            if (!this.gz.write(data.map((row) => JSON.stringify(row)).join('\n') + '\n')) {
                 yield new Promise((resolve) => this.gz.once('drain', resolve));
                 this.writing = false;
             }
@@ -61,7 +61,7 @@ class GzWriter {
             if (this.finished)
                 return;
             let interval;
-            return new Promise(r => {
+            return new Promise((r) => {
                 interval = setInterval(() => {
                     if (this.finished) {
                         clearInterval(interval);
