@@ -12,4 +12,7 @@ const reader = new GzReader(fileName);
 import { getDay } from 'qs-js-utils';
 
 getDay('2021-06-27T00:00:00.000Z') // = 2021-06-27
+
+
+isTimeWithinRange(new Date(), 3000) // check if a certain date object is within recent time window
 ```

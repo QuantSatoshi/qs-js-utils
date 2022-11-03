@@ -8,7 +8,19 @@
     "build": "rimraf dist && tsc",
     "tsc": "tsc",
     "tsc:watch": "tsc -w",
-    "prettier": "node ./node_modules/prettier/bin-prettier.js --parser=typescript --single-quote --trailing-comma=all --write --print-width=120 'src/**/*.ts'"
+    "prettier": "node ./node_modules/prettier/bin-prettier.js --parser=typescript --single-quote --trailing-comma=all --write --print-width=120 'src/**/*.ts'",
+    "test": "npm run tsc && ava dist/test/**/*"
+  },
+  "ava": {
+    "nodeArguments": [
+      "--loader=ts-node/esm"
+    ],
+    "typescript": {
+      "compile": false,
+      "rewritePaths": {
+        "src/": "dist/"
+      }
+    }
   },
   "repository": {
     "type": "git",
@@ -18,9 +30,12 @@
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
+    "@ava/typescript": "^3.0.1",
     "@types/node": "^18.11.9",
+    "ava": "^5.0.1",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
+    "ts-node": "^10.9.1",
     "typescript": "^4.8.4"
   }
 }
