@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMemoryUsage = exports.orderObjectDeep = exports.isKeyUnique = exports.isObject = exports.isArray = exports.isSymbol = exports.getTag = exports.safeJsonParse = exports.pause = void 0;
+exports.sha1Hash = exports.getMemoryUsage = exports.orderObjectDeep = exports.isKeyUnique = exports.isObject = exports.isArray = exports.isSymbol = exports.getTag = exports.safeJsonParse = exports.pause = void 0;
 const textUtils_1 = require("./textUtils");
+const crypto_1 = __importDefault(require("crypto"));
 function pause(ms) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve) => {
@@ -42,11 +46,11 @@ function isSymbol(value) {
 }
 exports.isSymbol = isSymbol;
 function isArray(a) {
-    return (!!a) && (a.constructor === Array);
+    return !!a && a.constructor === Array;
 }
 exports.isArray = isArray;
 function isObject(a) {
-    return (!!a) && (a.constructor === Object);
+    return !!a && a.constructor === Object;
 }
 exports.isObject = isObject;
 function isKeyUnique(items, key) {
@@ -79,3 +83,9 @@ function getMemoryUsage() {
     return Math.round(usedMemory * 100) / 100;
 }
 exports.getMemoryUsage = getMemoryUsage;
+function sha1Hash(data) {
+    const shasum = crypto_1.default.createHash('sha1');
+    shasum.update(data);
+    return shasum.digest('hex');
+}
+exports.sha1Hash = sha1Hash;

@@ -1,4 +1,5 @@
 import { firstLine } from './textUtils';
+import crypto from 'crypto';
 
 export async function pause(ms: number) {
   return new Promise((resolve: any) => {
@@ -61,4 +62,10 @@ export function orderObjectDeep(dataFiltered: any) {
 export function getMemoryUsage() {
   const usedMemory = process.memoryUsage().heapUsed / 1024 / 1024;
   return Math.round(usedMemory * 100) / 100;
+}
+
+export function sha1Hash(data: string) {
+  const shasum = crypto.createHash('sha1');
+  shasum.update(data);
+  return shasum.digest('hex');
 }

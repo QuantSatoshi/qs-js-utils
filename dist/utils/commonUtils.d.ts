@@ -7,3 +7,4 @@ export declare function isObject(a: any): boolean;
 export declare function isKeyUnique(items: Record<string, any>[], key: string): boolean;
 export declare function orderObjectDeep(dataFiltered: any): any;
 export declare function getMemoryUsage(): number;
+export declare function sha1Hash(data: string): string;
