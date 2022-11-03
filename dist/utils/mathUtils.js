@@ -39,7 +39,7 @@ function standardDeviation(values, limit = 1000) {
         newValues = values;
     }
     const avg = average(newValues);
-    const squareDiffs = newValues.map(value => {
+    const squareDiffs = newValues.map((value) => {
         const diff = value - avg;
         const sqrDiff = diff * diff;
         return sqrDiff;
@@ -58,7 +58,7 @@ function getSharpeRatio(dailyBalances) {
     const dailyProfitMean = average(dailyProfits);
     const std = standardDeviation(dailyProfits);
     const sharpeRatio = std === 0 ? 0 : (Math.sqrt(365) * dailyProfitMean) / std;
-    const stdNegative = standardDeviation(dailyProfits.filter(d => d < 0));
+    const stdNegative = standardDeviation(dailyProfits.filter((d) => d < 0));
     const sortinoRatio = !stdNegative ? 0 : (Math.sqrt(365) * dailyProfitMean) / stdNegative;
     return {
         sharpeRatio,

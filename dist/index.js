@@ -23,3 +23,4 @@ __exportStar(require("./utils/dateUtils"), exports);
 __exportStar(require("./utils/searchUtils"), exports);
 __exportStar(require("./utils/commonUtils"), exports);
 __exportStar(require("./utils/textUtils"), exports);
+__exportStar(require("./utils/mathUtils"), exports);
