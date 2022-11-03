@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSharpeRatio = exports.standardDeviation = exports.average = exports.sum = exports.median = void 0;
+exports.getSharpeRatio = exports.standardDeviation = exports.minBy = exports.maxBy = exports.max = exports.min = exports.average = exports.sum = exports.median = void 0;
+const commonUtils_1 = require("./commonUtils");
 function median(values) {
     const sorted = values.slice(0).sort();
     if (sorted.length % 2 === 0) {
@@ -24,6 +25,64 @@ function average(values) {
     return sum(values) / values.length;
 }
 exports.average = average;
+function min(values) {
+    let computed = values[0];
+    for (let i = 1; i < values.length; i++) {
+        if (values[i] < computed) {
+            computed = values[i];
+        }
+    }
+    return computed;
+}
+exports.min = min;
+function max(values) {
+    let computed = values[0];
+    for (let i = 1; i < values.length; i++) {
+        if (values[i] > computed) {
+            computed = values[i];
+        }
+    }
+    return computed;
+}
+exports.max = max;
+// lodash max by
+function maxBy(array, iteratee) {
+    let result;
+    if (array == null) {
+        return result;
+    }
+    let computed;
+    for (const value of array) {
+        const current = iteratee(value);
+        if (current != null && (computed === undefined
+            ? (current === current && !(0, commonUtils_1.isSymbol)(current))
+            : (current > computed))) {
+            computed = current;
+            result = value;
+        }
+    }
+    return result;
+}
+exports.maxBy = maxBy;
+// from lodash
+function minBy(array, iteratee) {
+    let result;
+    if (array == null) {
+        return result;
+    }
+    let computed;
+    for (const value of array) {
+        const current = iteratee(value);
+        if (current != null && (computed === undefined
+            ? (current === current && !(0, commonUtils_1.isSymbol)(current))
+            : (current < computed))) {
+            computed = current;
+            result = value;
+        }
+    }
+    return result;
+}
+exports.minBy = minBy;
 function standardDeviation(values, limit = 1000) {
     if (values.length === 0)
         return 0;

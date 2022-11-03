@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.safeJsonParse = exports.pause = void 0;
+exports.isSymbol = exports.getTag = exports.safeJsonParse = exports.pause = void 0;
 const textUtils_1 = require("./textUtils");
 function pause(ms) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -29,3 +29,15 @@ function safeJsonParse(jsonStr) {
     }
 }
 exports.safeJsonParse = safeJsonParse;
+function getTag(value) {
+    if (value == null) {
+        return value === undefined ? '[object Undefined]' : '[object Null]';
+    }
+    return toString.call(value);
+}
+exports.getTag = getTag;
+function isSymbol(value) {
+    const type = typeof value;
+    return type == 'symbol' || (type === 'object' && value != null && getTag(value) == '[object Symbol]');
+}
+exports.isSymbol = isSymbol;

@@ -1,3 +1,5 @@
+import { isSymbol } from './commonUtils';
+
 export function median(values: number[]): number {
   const sorted = values.slice(0).sort();
   if (sorted.length % 2 === 0) {
@@ -17,6 +19,62 @@ export function sum(values: number[]) {
 
 export function average(values: number[]) {
   return sum(values) / values.length;
+}
+
+export function min(values: number[]): number {
+  let computed = values[0];
+  for (let i = 1; i < values.length; i++) {
+    if (values[i] < computed) {
+      computed = values[i];
+    }
+  }
+  return computed;
+}
+
+export function max(values: number[]): number {
+  let computed = values[0];
+  for (let i = 1; i < values.length; i++) {
+    if (values[i] > computed) {
+      computed = values[i];
+    }
+  }
+  return computed;
+}
+
+// lodash max by
+export function maxBy<T = any>(array: T[], iteratee: (obj: T) => number) {
+  let result;
+  if (array == null) {
+    return result;
+  }
+  let computed;
+  for (const value of array) {
+    const current = iteratee(value);
+
+    if (current != null && (computed === undefined ? current === current && !isSymbol(current) : current > computed)) {
+      computed = current;
+      result = value;
+    }
+  }
+  return result;
+}
+
+// from lodash
+export function minBy<T = any>(array: T[], iteratee: (obj: T) => number) {
+  let result;
+  if (array == null) {
+    return result;
+  }
+  let computed;
+  for (const value of array) {
+    const current = iteratee(value);
+
+    if (current != null && (computed === undefined ? current === current && !isSymbol(current) : current < computed)) {
+      computed = current;
+      result = value;
+    }
+  }
+  return result;
 }
 
 export function standardDeviation(values: number[], limit = 1000) {
