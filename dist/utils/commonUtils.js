@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sha1Hash = exports.getMemoryUsage = exports.orderObjectDeep = exports.isKeyUnique = exports.isObject = exports.isArray = exports.isSymbol = exports.getTag = exports.safeJsonParse = exports.pause = void 0;
+exports.handleException = exports.sha1Hash = exports.getMemoryUsage = exports.orderObjectDeep = exports.isKeyUnique = exports.isObject = exports.isArray = exports.isSymbol = exports.getTag = exports.safeJsonParse = exports.pause = void 0;
 const textUtils_1 = require("./textUtils");
 const crypto_1 = __importDefault(require("crypto"));
 function pause(ms) {
@@ -89,3 +89,10 @@ function sha1Hash(data) {
     return shasum.digest('hex');
 }
 exports.sha1Hash = sha1Hash;
+function handleException() {
+    process.on('uncaughtException', exception => {
+        const errMsg = `uncaughtException ${exception}`;
+        console.error(errMsg); // to see your exception details in the console
+    });
+}
+exports.handleException = handleException;

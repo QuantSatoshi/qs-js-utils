@@ -14,7 +14,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GzWriter = exports.GzReader = void 0;
+exports.HealthCheck = exports.GzWriter = exports.GzReader = void 0;
 var gzReader_1 = require("./utils/gzReader");
 Object.defineProperty(exports, "GzReader", { enumerable: true, get: function () { return gzReader_1.GzReader; } });
 var gzWriter_1 = require("./utils/gzWriter");
@@ -24,3 +24,5 @@ __exportStar(require("./utils/searchUtils"), exports);
 __exportStar(require("./utils/commonUtils"), exports);
 __exportStar(require("./utils/textUtils"), exports);
 __exportStar(require("./utils/mathUtils"), exports);
+var healthCheck_1 = require("./controllers/healthCheck");
+Object.defineProperty(exports, "HealthCheck", { enumerable: true, get: function () { return healthCheck_1.HealthCheck; } });

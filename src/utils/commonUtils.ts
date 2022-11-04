@@ -69,3 +69,10 @@ export function sha1Hash(data: string) {
   shasum.update(data);
   return shasum.digest('hex');
 }
+
+export function handleException() {
+  process.on('uncaughtException', (exception) => {
+    const errMsg = `uncaughtException ${exception}`;
+    console.error(errMsg); // to see your exception details in the console
+  });
+}
