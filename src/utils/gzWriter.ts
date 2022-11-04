@@ -14,7 +14,7 @@ export class GzWriter {
     });
     this.gz.on('finish', () => {
       if (this.debug) {
-        console.log('finished compression, now need to finish writing...');
+        console.log('finished compression, now need to finish writing...', fileName);
       }
     });
     const f = fs.createWriteStream(fileName);

@@ -20,7 +20,7 @@ export class GzReader {
   async readStream(onData: (data: string) => any) {
     if (this.debug) {
       this.fileContents.on('pipe', (data: any) => {
-        console.log('ReadStream: start pip on stream...\n', data);
+        console.log(`ReadStream: ${this.fileName} start pip on stream...`, data);
       });
     }
 
@@ -39,7 +39,7 @@ export class GzReader {
     return new Promise((resolve, reject) => {
       this.fileContents.on('end', () => {
         if (this.debug) {
-          console.log(`pipe finished`);
+          console.log(`pipe finished ${this.fileName}`);
         }
         resolve(this.fileName);
       });
