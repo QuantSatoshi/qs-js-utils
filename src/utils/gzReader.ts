@@ -24,23 +24,29 @@ export class GzReader {
       });
     }
     return new Promise((resolve, reject) => {
-      this.fileContents.on('error', function (err: any) {
-        reject(err);
-      });
-      this.fileContents.on('end', () => {
-        if (this.debug) {
-          console.log(`pipe finished ${this.fileName}`);
-        }
-        resolve(this.fileName);
-      });
-      const streamReader = this.fileContents.pipe(this.unzip);
-      let lineReader = readline.createInterface({
-        input: streamReader,
-      });
+      const streamReader = this.fileContents
+        .on('error', (err: any) => {
+          console.error(`pipe error ${this.fileName}`, err);
+          reject(err);
+        })
+        .pipe(this.unzip);
       streamReader.on(`error`, (err: any) => {
         console.error(`streamReader err`, err);
         console.log(`deleting ${this.fileName}`);
         fs.unlink(this.fileName, () => {});
+        reject(err);
+      });
+      // event sequence: finish, end, close
+
+      // close is the last event
+      streamReader.on(`close`, () => {
+        if (this.debug) {
+          console.error(`streamReader close ${this.fileName}`);
+        }
+        resolve(this.fileName);
+      });
+      const lineReader = readline.createInterface({
+        input: streamReader,
       });
       lineReader.on('line', (line: string) => {
         onData(JSON.parse(line));
