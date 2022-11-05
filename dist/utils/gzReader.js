@@ -31,10 +31,12 @@ class GzReader {
                 });
             }
             return new Promise((resolve, reject) => {
-                const streamReader = this.fileContents.on('error', (err) => {
+                const streamReader = this.fileContents
+                    .on('error', (err) => {
                     console.error(`pipe error ${this.fileName}`, err);
                     reject(err);
-                }).pipe(this.unzip);
+                })
+                    .pipe(this.unzip);
                 streamReader.on(`error`, (err) => {
                     console.error(`streamReader err`, err);
                     console.log(`deleting ${this.fileName}`);
@@ -45,7 +47,7 @@ class GzReader {
                 // close is the last event
                 streamReader.on(`close`, () => {
                     if (this.debug) {
-                        console.error(`streamReader close ${this.fileName}`);
+                        console.log(`streamReader close ${this.fileName}`);
                     }
                     resolve(this.fileName);
                 });

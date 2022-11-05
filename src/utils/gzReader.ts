@@ -41,7 +41,7 @@ export class GzReader {
       // close is the last event
       streamReader.on(`close`, () => {
         if (this.debug) {
-          console.error(`streamReader close ${this.fileName}`);
+          console.log(`streamReader close ${this.fileName}`);
         }
         resolve(this.fileName);
       });
