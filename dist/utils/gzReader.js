@@ -55,7 +55,7 @@ class GzReader {
                     input: streamReader,
                 });
                 lineReader.on('line', (line) => {
-                    onData(JSON.parse(line));
+                    onData(line);
                 });
             });
         });

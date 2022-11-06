@@ -49,7 +49,7 @@ export class GzReader {
         input: streamReader,
       });
       lineReader.on('line', (line: string) => {
-        onData(JSON.parse(line));
+        onData(line);
       });
     });
   }
