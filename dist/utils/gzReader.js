@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GzReader = void 0;
+const stream_1 = require("stream");
 const fs = require('fs');
 const zlib = require('zlib');
 const readline = require('readline');
@@ -24,7 +25,7 @@ class GzReader {
         }
         this.fileContents = fs.createReadStream(fileName);
     }
-    toStream() {
+    toStream(options) {
         const readStream = this.fileContents
             .on('error', (err) => {
             console.error(`pipe read error ${this.fileName}`, err);
@@ -35,7 +36,16 @@ class GzReader {
             console.error(`pipe unzip error ${this.fileName}`, err);
             throw err;
         });
-        return byline(readStream);
+        const ret = byline(readStream);
+        if (!(options === null || options === void 0 ? void 0 : options.parseJSON))
+            return ret;
+        const jsonParseTransform = new stream_1.Transform({
+            objectMode: true,
+            transform: (data, _, done) => {
+                done(null, JSON.parse(data.toString('utf8')));
+            },
+        });
+        return ret.pipe(jsonParseTransform);
     }
     readStream(onData) {
         return __awaiter(this, void 0, void 0, function* () {

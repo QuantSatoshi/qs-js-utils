@@ -17,7 +17,7 @@ const gzReader_1 = require("../../utils/gzReader");
 (0, ava_1.default)('gzReader stream pipe', (t) => __awaiter(void 0, void 0, void 0, function* () {
     function streamToString(stream) {
         const chunks = [];
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             stream.on('data', (chunk) => chunks.push(JSON.parse(chunk.toString('utf8'))));
             stream.on('end', () => resolve(chunks));
         });
@@ -29,6 +29,24 @@ const gzReader_1 = require("../../utils/gzReader");
         [1, 2, 3, 4, 5, 6],
         [1, 2, 3, 4, 5, 7],
         [1, 2, 3, 4, 5, 8],
-        [1, 2, 3, 4, 5, 9]
+        [1, 2, 3, 4, 5, 9],
+    ]);
+}));
+(0, ava_1.default)('gzReader stream pipe with json parse', (t) => __awaiter(void 0, void 0, void 0, function* () {
+    function streamToString(stream) {
+        const chunks = [];
+        return new Promise((resolve) => {
+            stream.on('data', (chunk) => chunks.push(chunk));
+            stream.on('end', () => resolve(chunks));
+        });
+    }
+    const gzReader = new gzReader_1.GzReader(`${__dirname}/../../../src/test/utils/sampleData.gz`);
+    const ret = yield streamToString(gzReader.toStream({ parseJSON: true }));
+    t.deepEqual(ret, [
+        [1, 2, 3, 4, 5, 5],
+        [1, 2, 3, 4, 5, 6],
+        [1, 2, 3, 4, 5, 7],
+        [1, 2, 3, 4, 5, 8],
+        [1, 2, 3, 4, 5, 9],
     ]);
 }));
