@@ -4,5 +4,6 @@ export declare class GzReader {
     fileName: string;
     debug: boolean;
     constructor(fileName: string, debug?: boolean);
+    toStream(): any;
     readStream(onData: (data: string) => any): Promise<unknown>;
 }

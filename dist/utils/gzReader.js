@@ -13,6 +13,7 @@ exports.GzReader = void 0;
 const fs = require('fs');
 const zlib = require('zlib');
 const readline = require('readline');
+const byline = require('byline');
 class GzReader {
     constructor(fileName, debug = true) {
         this.unzip = zlib.createGunzip();
@@ -22,6 +23,19 @@ class GzReader {
             console.log(`gunzip ${fileName}`);
         }
         this.fileContents = fs.createReadStream(fileName);
+    }
+    toStream() {
+        const readStream = this.fileContents
+            .on('error', (err) => {
+            console.error(`pipe read error ${this.fileName}`, err);
+            throw err;
+        })
+            .pipe(this.unzip)
+            .on('error', (err) => {
+            console.error(`pipe unzip error ${this.fileName}`, err);
+            throw err;
+        });
+        return byline(readStream);
     }
     readStream(onData) {
         return __awaiter(this, void 0, void 0, function* () {
