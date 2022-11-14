@@ -76,3 +76,11 @@ export function handleException() {
     console.error(errMsg); // to see your exception details in the console
   });
 }
+
+export function generateReverseMap(mapObj: Record<string, string>) {
+  const ret: Record<string, string> = {};
+  for (let key in mapObj) {
+    ret[mapObj[key]] = key;
+  }
+  return ret;
+}

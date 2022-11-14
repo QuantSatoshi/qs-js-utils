@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleException = exports.sha1Hash = exports.getMemoryUsage = exports.orderObjectDeep = exports.isKeyUnique = exports.isObject = exports.isArray = exports.isSymbol = exports.getTag = exports.safeJsonParse = exports.pause = void 0;
+exports.generateReverseMap = exports.handleException = exports.sha1Hash = exports.getMemoryUsage = exports.orderObjectDeep = exports.isKeyUnique = exports.isObject = exports.isArray = exports.isSymbol = exports.getTag = exports.safeJsonParse = exports.pause = void 0;
 const textUtils_1 = require("./textUtils");
 const crypto_1 = __importDefault(require("crypto"));
 function pause(ms) {
@@ -96,3 +96,11 @@ function handleException() {
     });
 }
 exports.handleException = handleException;
+function generateReverseMap(mapObj) {
+    const ret = {};
+    for (let key in mapObj) {
+        ret[mapObj[key]] = key;
+    }
+    return ret;
+}
+exports.generateReverseMap = generateReverseMap;
