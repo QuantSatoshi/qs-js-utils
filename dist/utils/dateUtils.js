@@ -38,8 +38,8 @@ function getTsBuckets(tsStart, tsEnd, resolution) {
     return buckets;
 }
 exports.getTsBuckets = getTsBuckets;
-function timeSince(date) {
-    const seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000);
+function timeSince(dateFrom, dateTo = Date.now()) {
+    const seconds = Math.floor((new Date(dateTo).getTime() - new Date(dateFrom).getTime()) / 1000);
     let interval = seconds / 31536000;
     if (interval > 1) {
         return Math.floor(interval) + ' years';

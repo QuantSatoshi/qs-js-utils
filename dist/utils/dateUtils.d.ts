@@ -3,4 +3,4 @@ export declare function isTimeWithinRange(lastTs: Date | undefined, rangeMs: num
 export declare function humanTime(t: Date | string | number): string;
 export declare function snapTimestamp(ts: Date | string, resolution: number, forwardRound?: boolean): Date;
 export declare function getTsBuckets(tsStart: Date, tsEnd: Date, resolution: number): number[];
-export declare function timeSince(date: Date | number | string): string;
+export declare function timeSince(dateFrom: Date | number | string, dateTo?: Date | number | string): string;

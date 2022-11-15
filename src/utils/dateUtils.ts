@@ -34,8 +34,8 @@ export function getTsBuckets(tsStart: Date, tsEnd: Date, resolution: number): nu
   return buckets;
 }
 
-export function timeSince(date: Date | number | string) {
-  const seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000);
+export function timeSince(dateFrom: Date | number | string, dateTo: Date | number | string = Date.now()) {
+  const seconds = Math.floor((new Date(dateTo).getTime() - new Date(dateFrom).getTime()) / 1000);
 
   let interval = seconds / 31536000;
 
