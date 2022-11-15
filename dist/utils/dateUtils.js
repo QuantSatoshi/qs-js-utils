@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTsBuckets = exports.snapTimestamp = exports.humanTime = exports.isTimeWithinRange = exports.getDay = void 0;
+exports.timeSince = exports.getTsBuckets = exports.snapTimestamp = exports.humanTime = exports.isTimeWithinRange = exports.getDay = void 0;
 function getUTCDateFromTime(date) {
     return date.toISOString().substring(0, 10);
 }
@@ -62,3 +62,4 @@ function timeSince(date) {
     }
     return Math.floor(seconds) + ' seconds';
 }
+exports.timeSince = timeSince;
