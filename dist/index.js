@@ -24,5 +24,6 @@ __exportStar(require("./utils/searchUtils"), exports);
 __exportStar(require("./utils/commonUtils"), exports);
 __exportStar(require("./utils/textUtils"), exports);
 __exportStar(require("./utils/mathUtils"), exports);
+__exportStar(require("./utils/binaryUtils"), exports);
 var healthCheck_1 = require("./controllers/healthCheck");
 Object.defineProperty(exports, "HealthCheck", { enumerable: true, get: function () { return healthCheck_1.HealthCheck; } });
