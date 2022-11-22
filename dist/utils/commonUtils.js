@@ -105,6 +105,6 @@ function generateReverseMap(mapObj) {
 }
 exports.generateReverseMap = generateReverseMap;
 function compact(arr) {
-    return arr.filter(a => a !== null && a !== undefined);
+    return arr.filter((a) => a !== null && a !== undefined);
 }
 exports.compact = compact;

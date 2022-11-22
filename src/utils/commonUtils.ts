@@ -85,6 +85,6 @@ export function generateReverseMap(mapObj: Record<string, string>) {
   return ret;
 }
 
-export function compact<T = any>(arr: T[]): T[] {
-  return arr.filter((a) => a !== null && a !== undefined);
+export function compact<T = any>(arr: (T | null | undefined)[]): T[] {
+  return arr.filter((a) => a !== null && a !== undefined) as T[];
 }
