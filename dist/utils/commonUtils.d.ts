@@ -10,3 +10,4 @@ export declare function getMemoryUsage(): number;
 export declare function sha1Hash(data: string): string;
 export declare function handleException(): void;
 export declare function generateReverseMap(mapObj: Record<string, string>): Record<string, string>;
+export declare function compact<T = any>(arr: T[]): T[];
