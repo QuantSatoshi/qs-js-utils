@@ -12,4 +12,4 @@ export declare function handleException(): void;
 export declare function generateReverseMap(mapObj: Record<string, string>): Record<string, string>;
 export declare function compact<T = any>(arr: (T | null | undefined)[]): T[];
 export declare function sampleOne<T = any>(items: T[]): T;
-export declare function chunk<T = any>(array: T[], size?: number): any[];
+export declare function chunk<T = any>(array: T[], size?: number): T[][];
