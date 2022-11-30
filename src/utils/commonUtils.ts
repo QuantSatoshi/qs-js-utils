@@ -89,6 +89,21 @@ export function compact<T = any>(arr: (T | null | undefined)[]): T[] {
   return arr.filter((a) => a !== null && a !== undefined) as T[];
 }
 
-export function sampleOne(items: any[]) {
+export function sampleOne<T = any>(items: T[]): T {
   return items[Math.floor(Math.random() * items.length)];
+}
+
+export function chunk<T = any>(array: T[], size = 1) {
+  const length = array == null ? 0 : array.length;
+  if (!length || size < 1) {
+    return [];
+  }
+  let index = 0;
+  let resIndex = 0;
+  const result = new Array(Math.ceil(length / size));
+
+  while (index < length) {
+    result[resIndex++] = array.slice(index, (index += size));
+  }
+  return result;
 }

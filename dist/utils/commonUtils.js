@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sampleOne = exports.compact = exports.generateReverseMap = exports.handleException = exports.sha1Hash = exports.getMemoryUsage = exports.orderObjectDeep = exports.isKeyUnique = exports.isObject = exports.isArray = exports.isSymbol = exports.getTag = exports.safeJsonParse = exports.pause = void 0;
+exports.chunk = exports.sampleOne = exports.compact = exports.generateReverseMap = exports.handleException = exports.sha1Hash = exports.getMemoryUsage = exports.orderObjectDeep = exports.isKeyUnique = exports.isObject = exports.isArray = exports.isSymbol = exports.getTag = exports.safeJsonParse = exports.pause = void 0;
 const textUtils_1 = require("./textUtils");
 const crypto_1 = __importDefault(require("crypto"));
 function pause(ms) {
@@ -112,3 +112,17 @@ function sampleOne(items) {
     return items[Math.floor(Math.random() * items.length)];
 }
 exports.sampleOne = sampleOne;
+function chunk(array, size = 1) {
+    const length = array == null ? 0 : array.length;
+    if (!length || size < 1) {
+        return [];
+    }
+    let index = 0;
+    let resIndex = 0;
+    const result = new Array(Math.ceil(length / size));
+    while (index < length) {
+        result[resIndex++] = array.slice(index, (index += size));
+    }
+    return result;
+}
+exports.chunk = chunk;
