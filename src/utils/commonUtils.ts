@@ -88,3 +88,7 @@ export function generateReverseMap(mapObj: Record<string, string>) {
 export function compact<T = any>(arr: (T | null | undefined)[]): T[] {
   return arr.filter((a) => a !== null && a !== undefined) as T[];
 }
+
+export function sampleOne(items: any[]) {
+  return items[Math.floor(Math.random() * items.length)];
+}
