@@ -9,6 +9,9 @@ class HealthCheck {
         console.log(`${this.name} health check started on ${new Date().toISOString()}`);
         setInterval(this.checkHealth.bind(this), Math.min(this.timeoutMs, 60000));
     }
+    setOnExit(onExit) {
+        this.onExit = onExit;
+    }
     heartBeat() {
         this.lastHeartBeat = new Date();
     }
@@ -20,7 +23,7 @@ class HealthCheck {
         }
         if (new Date().getTime() - this.lastHeartBeat.getTime() > this.timeoutMs) {
             console.error(`${this.name} health check no heart beat in ${this.timeoutMs}`);
-            this.onExit && this.onExit('health check no heart beat');
+            this.onExit && this.onExit('health check no heart beat, exit now');
             setTimeout(() => {
                 process.exit(1);
             }, 5000);

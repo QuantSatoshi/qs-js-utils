@@ -8,6 +8,7 @@ export declare class HealthCheck {
     private name;
     onExit?: (msg: string) => void;
     constructor(options: HealthCheckOptions);
+    setOnExit(onExit?: (msg: string) => void): void;
     heartBeat(): void;
     checkHealth(): void;
 }
