@@ -108,6 +108,6 @@ export function chunk<T = any>(array: T[], size = 1): T[][] {
   return result;
 }
 
-function isError(obj: any) {
+export function isError(obj: any) {
   return Object.prototype.toString.call(obj) === '[object Error]';
 }

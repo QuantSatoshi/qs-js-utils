@@ -13,3 +13,4 @@ export declare function generateReverseMap(mapObj: Record<string, string>): Reco
 export declare function compact<T = any>(arr: (T | null | undefined)[]): T[];
 export declare function sampleOne<T = any>(items: T[]): T;
 export declare function chunk<T = any>(array: T[], size?: number): T[][];
+export declare function isError(obj: any): boolean;
