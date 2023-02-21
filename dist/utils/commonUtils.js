@@ -126,3 +126,6 @@ function chunk(array, size = 1) {
     return result;
 }
 exports.chunk = chunk;
+function isError(obj) {
+    return Object.prototype.toString.call(obj) === "[object Error]";
+}
