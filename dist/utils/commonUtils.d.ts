@@ -14,3 +14,4 @@ export declare function compact<T = any>(arr: (T | null | undefined)[]): T[];
 export declare function sampleOne<T = any>(items: T[]): T;
 export declare function chunk<T = any>(array: T[], size?: number): T[][];
 export declare function isError(obj: any): boolean;
+export declare function every(array: any[], predicate: (item: any, i: number, arr: any[]) => boolean): boolean;

@@ -111,3 +111,15 @@ export function chunk<T = any>(array: T[], size = 1): T[][] {
 export function isError(obj: any) {
   return Object.prototype.toString.call(obj) === '[object Error]';
 }
+
+export function every(array: any[], predicate: (item: any, i: number, arr: any[]) => boolean) {
+  let index = -1;
+  const length = array.length;
+
+  while (++index < length) {
+    if (!predicate(array[index], index, array)) {
+      return false;
+    }
+  }
+  return true;
+}
