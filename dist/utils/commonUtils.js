@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.every = exports.isError = exports.chunk = exports.sampleOne = exports.compact = exports.generateReverseMap = exports.handleException = exports.sha1Hash = exports.getMemoryUsage = exports.orderObjectDeep = exports.isKeyUnique = exports.isObject = exports.isArray = exports.isSymbol = exports.getTag = exports.safeJsonParse = exports.pause = void 0;
+exports.omit = exports.every = exports.isError = exports.chunk = exports.sampleOne = exports.compact = exports.generateReverseMap = exports.handleException = exports.sha1Hash = exports.getMemoryUsage = exports.orderObjectDeep = exports.isKeyUnique = exports.isObject = exports.isArray = exports.isSymbol = exports.getTag = exports.safeJsonParse = exports.pause = void 0;
 const textUtils_1 = require("./textUtils");
 const crypto_1 = __importDefault(require("crypto"));
 function pause(ms) {
@@ -141,3 +141,13 @@ function every(array, predicate) {
     return true;
 }
 exports.every = every;
+function omit(obj, keys) {
+    const ret = {};
+    for (let key in obj) {
+        if (!keys.includes(key)) {
+            ret[key] = obj[key];
+        }
+    }
+    return ret;
+}
+exports.omit = omit;
