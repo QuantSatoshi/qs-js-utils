@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.last = exports.flatten = void 0;
+exports.getRangeArr = exports.last = exports.flatten = void 0;
 function baseFlatten(array, depth, result) {
     result || (result = []);
     if (array == null) {
@@ -30,3 +30,11 @@ function last(items) {
     return items[items.length - 1];
 }
 exports.last = last;
+function getRangeArr(count) {
+    const ids = [];
+    for (let id = 0; id < count; id++) {
+        ids.push(id);
+    }
+    return ids;
+}
+exports.getRangeArr = getRangeArr;

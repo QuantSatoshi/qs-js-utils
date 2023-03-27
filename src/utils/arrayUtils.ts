@@ -28,3 +28,11 @@ export function flatten<T = any>(items: T[] | T[][]) {
 export function last<T = any>(items: T[]) {
   return items[items.length - 1];
 }
+
+export function getRangeArr(count: number): number[] {
+  const ids: number[] = [];
+  for (let id = 0; id < count; id++) {
+    ids.push(id);
+  }
+  return ids;
+}

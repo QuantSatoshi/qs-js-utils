@@ -142,6 +142,8 @@ function every(array, predicate) {
 }
 exports.every = every;
 function omit(obj, keys) {
+    if (!obj)
+        return obj;
     const ret = {};
     for (let key in obj) {
         if (!keys.includes(key)) {

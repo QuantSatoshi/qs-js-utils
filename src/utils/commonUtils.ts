@@ -125,6 +125,7 @@ export function every(array: any[], predicate: (item: any, i: number, arr: any[]
 }
 
 export function omit<T = Record<string, any>>(obj: Record<string, any>, keys: string[]) {
+  if (!obj) return obj;
   const ret: any = {};
   for (let key in obj) {
     if (!keys.includes(key)) {
