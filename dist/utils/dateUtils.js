@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.timeSince = exports.getTsBuckets = exports.snapTimestamp = exports.humanTime = exports.isTimeWithinRange = exports.getDay = void 0;
+exports.timeSince = exports.getTsBuckets = exports.snapTimestampNum = exports.snapTimestamp = exports.humanTime = exports.isTimeWithinRange = exports.getDay = void 0;
 function getUTCDateFromTime(date) {
     return date.toISOString().substring(0, 10);
 }
@@ -22,14 +22,18 @@ exports.humanTime = humanTime;
 // be aware not to create infinite loops
 function snapTimestamp(ts, resolution, forwardRound = false) {
     const epoch = new Date(ts).valueOf();
-    if (!resolution)
-        throw new Error('invalid resolution in snapTimestamp');
-    let newEpoch = epoch - (epoch % (resolution * 1000));
-    if (forwardRound && newEpoch < epoch)
-        newEpoch += resolution * 1000;
-    return new Date(newEpoch);
+    return new Date(snapTimestampNum(epoch, resolution, forwardRound));
 }
 exports.snapTimestamp = snapTimestamp;
+function snapTimestampNum(ts, resolution, forwardRound = false) {
+    if (!resolution)
+        throw new Error('invalid resolution in snapTimestamp');
+    let newEpoch = ts - (ts % (resolution * 1000));
+    if (forwardRound && newEpoch < ts)
+        newEpoch += resolution * 1000;
+    return newEpoch;
+}
+exports.snapTimestampNum = snapTimestampNum;
 function getTsBuckets(tsStart, tsEnd, resolution) {
     const buckets = [];
     for (let t = tsStart.getTime(); t < tsEnd.getTime(); t += resolution * 1000) {

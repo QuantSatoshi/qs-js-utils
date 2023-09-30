@@ -1,3 +1,4 @@
+export declare function autoStringify(row: any): string;
 export declare class GzWriter {
     gz: any;
     writing: boolean;

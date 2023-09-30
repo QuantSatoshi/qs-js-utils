@@ -20,10 +20,14 @@ export function humanTime(t: Date | string | number) {
 // be aware not to create infinite loops
 export function snapTimestamp(ts: Date | string, resolution: number, forwardRound = false): Date {
   const epoch = new Date(ts).valueOf();
+  return new Date(snapTimestampNum(epoch, resolution, forwardRound));
+}
+
+export function snapTimestampNum(ts: number, resolution: number, forwardRound = false): number {
   if (!resolution) throw new Error('invalid resolution in snapTimestamp');
-  let newEpoch = epoch - (epoch % (resolution * 1000));
-  if (forwardRound && newEpoch < epoch) newEpoch += resolution * 1000;
-  return new Date(newEpoch);
+  let newEpoch = ts - (ts % (resolution * 1000));
+  if (forwardRound && newEpoch < ts) newEpoch += resolution * 1000;
+  return newEpoch;
 }
 
 export function getTsBuckets(tsStart: Date, tsEnd: Date, resolution: number): number[] {

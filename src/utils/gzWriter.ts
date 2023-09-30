@@ -1,6 +1,11 @@
 const zlib = require('zlib');
 const fs = require('fs');
 
+export function autoStringify(row: any) {
+  if (typeof row === 'string') return row;
+  return JSON.stringify(row);
+}
+
 export class GzWriter {
   gz = zlib.createGzip();
   writing = false;
@@ -32,7 +37,7 @@ export class GzWriter {
 
   async writeOne(data: any) {
     this.writing = true;
-    if (!this.gz.write(JSON.stringify(data) + '\n')) {
+    if (!this.gz.write(autoStringify(data) + '\n')) {
       await new Promise((resolve, reject) => this.gz.once('drain', resolve));
       this.writing = false;
     }
@@ -40,7 +45,7 @@ export class GzWriter {
 
   async writeMany(data: any[]) {
     this.writing = true;
-    if (!this.gz.write(data.map((row) => JSON.stringify(row)).join('\n') + '\n')) {
+    if (!this.gz.write(data.map((row) => autoStringify(row)).join('\n') + '\n')) {
       await new Promise((resolve) => this.gz.once('drain', resolve));
       this.writing = false;
     }

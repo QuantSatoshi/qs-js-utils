@@ -9,9 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GzWriter = void 0;
+exports.GzWriter = exports.autoStringify = void 0;
 const zlib = require('zlib');
 const fs = require('fs');
+function autoStringify(row) {
+    if (typeof row === 'string')
+        return row;
+    return JSON.stringify(row);
+}
+exports.autoStringify = autoStringify;
 class GzWriter {
     constructor(fileName, debug = true) {
         this.gz = zlib.createGzip();
@@ -41,7 +47,7 @@ class GzWriter {
     writeOne(data) {
         return __awaiter(this, void 0, void 0, function* () {
             this.writing = true;
-            if (!this.gz.write(JSON.stringify(data) + '\n')) {
+            if (!this.gz.write(autoStringify(data) + '\n')) {
                 yield new Promise((resolve, reject) => this.gz.once('drain', resolve));
                 this.writing = false;
             }
@@ -50,7 +56,7 @@ class GzWriter {
     writeMany(data) {
         return __awaiter(this, void 0, void 0, function* () {
             this.writing = true;
-            if (!this.gz.write(data.map((row) => JSON.stringify(row)).join('\n') + '\n')) {
+            if (!this.gz.write(data.map((row) => autoStringify(row)).join('\n') + '\n')) {
                 yield new Promise((resolve) => this.gz.once('drain', resolve));
                 this.writing = false;
             }
