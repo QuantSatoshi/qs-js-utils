@@ -73,7 +73,11 @@ export class GzReader {
         input: streamReader,
       });
       lineReader.on('line', (line: string) => {
-        onData(line);
+        if (onData(line) === null) {
+          // early break the stream
+          lineReader.close();
+          streamReader.close();
+        }
       });
     });
   }
