@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.omit = exports.every = exports.isError = exports.chunk = exports.sampleOne = exports.compact = exports.generateReverseMap = exports.handleException = exports.sha1Hash = exports.getMemoryUsage = exports.orderObjectDeep = exports.isKeyUnique = exports.isObject = exports.isArray = exports.isSymbol = exports.getTag = exports.safeJsonParse = exports.pause = void 0;
+exports.deepEqualLvOne = exports.omit = exports.every = exports.isError = exports.chunk = exports.sampleOne = exports.compact = exports.generateReverseMap = exports.handleException = exports.sha1Hash = exports.getMemoryUsage = exports.orderObjectDeep = exports.isKeyUnique = exports.isObject = exports.isArray = exports.isSymbol = exports.getTag = exports.safeJsonParse = exports.pause = void 0;
 const textUtils_1 = require("./textUtils");
 const crypto_1 = __importDefault(require("crypto"));
 function pause(ms) {
@@ -153,3 +153,12 @@ function omit(obj, keys) {
     return ret;
 }
 exports.omit = omit;
+// only key in a is compared
+function deepEqualLvOne(a, b) {
+    for (let key in a) {
+        if (a[key] !== b[key])
+            return false;
+    }
+    return false;
+}
+exports.deepEqualLvOne = deepEqualLvOne;
