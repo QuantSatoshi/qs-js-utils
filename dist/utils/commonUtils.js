@@ -155,6 +155,10 @@ function omit(obj, keys) {
 exports.omit = omit;
 // only key in a is compared
 function deepEqualLvOne(a, b) {
+    if (a && !b)
+        return false;
+    if (!a && !b)
+        return true;
     for (let key in a) {
         if (a[key] !== b[key])
             return false;

@@ -136,9 +136,11 @@ export function omit<T = Record<string, any>>(obj: Record<string, any>, keys: st
 }
 
 // only key in a is compared
-export function deepEqualLvOne(a: Record<string, any>, b: Record<string, any>) {
+export function deepEqualLvOne(a?: Record<string, any> | null, b?: Record<string, any> | null) {
+  if (a && !b) return false;
+  if (!a && !b) return true;
   for (let key in a) {
-    if (a[key] !== b[key]) return false;
+    if (a[key] !== b![key]) return false;
   }
   return false;
 }

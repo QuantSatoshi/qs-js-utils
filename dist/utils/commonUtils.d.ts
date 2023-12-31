@@ -16,4 +16,4 @@ export declare function chunk<T = any>(array: T[], size?: number): T[][];
 export declare function isError(obj: any): boolean;
 export declare function every(array: any[], predicate: (item: any, i: number, arr: any[]) => boolean): boolean;
 export declare function omit<T = Record<string, any>>(obj: Record<string, any>, keys: string[]): T;
-export declare function deepEqualLvOne(a: Record<string, any>, b: Record<string, any>): boolean;
+export declare function deepEqualLvOne(a?: Record<string, any> | null, b?: Record<string, any> | null): boolean;
