@@ -13,3 +13,4 @@ export declare function getSharpeRatio(dailyBalances: number[]): {
     std: number;
     days: number;
 };
+export declare function shuffle<T = any>(array: T[]): T[];

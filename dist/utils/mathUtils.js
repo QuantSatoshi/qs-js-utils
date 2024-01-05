@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSharpeRatio = exports.standardDeviation = exports.minBy = exports.maxBy = exports.max = exports.min = exports.average = exports.sum = exports.median = void 0;
+exports.shuffle = exports.getSharpeRatio = exports.standardDeviation = exports.minBy = exports.maxBy = exports.max = exports.min = exports.average = exports.sum = exports.median = void 0;
 const commonUtils_1 = require("./commonUtils");
 function median(values) {
     const sorted = values.slice(0).sort();
@@ -124,3 +124,12 @@ function getSharpeRatio(dailyBalances) {
     };
 }
 exports.getSharpeRatio = getSharpeRatio;
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        // Swap array[i] and array[j]
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+exports.shuffle = shuffle;
