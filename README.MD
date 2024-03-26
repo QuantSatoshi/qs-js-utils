@@ -25,3 +25,11 @@ await gzWriter.writeMany(data);
 gzWriter.end();
 await gzWriter.waitForFinish();
 ```
+
+### dev
+```
+npm i -g yarn
+yarn
+npm run tsc
+npm test
+```
