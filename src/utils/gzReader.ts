@@ -41,9 +41,8 @@ export class GzReader {
               }
             });
           }
-        } else {
-          throw err;
         }
+        throw err;
       });
     const ret = byline(readStream);
     if (!options?.parseJSON) return ret;
