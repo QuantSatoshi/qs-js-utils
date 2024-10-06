@@ -10,9 +10,11 @@ export class GzReader {
   fileContents: any;
   fileName: string;
   debug: boolean;
+  deletePartialGz: boolean;
 
-  constructor(fileName: string, debug: boolean = true) {
+  constructor(fileName: string, debug: boolean = false, deletePartialGz = false) {
     this.fileName = fileName;
+    this.deletePartialGz = deletePartialGz;
     this.debug = debug;
     if (this.debug) {
       console.log(`gunzip ${fileName}`);
@@ -28,7 +30,20 @@ export class GzReader {
       .pipe(this.unzip)
       .on('error', (err: any) => {
         console.error(`pipe unzip error ${this.fileName}`, err);
-        throw err;
+        if (err.message.includes('unexpected end of file')) {
+          if (this.deletePartialGz) {
+            console.warn(`Warning: Gzip error - ${err.message}. Deleting ${this.fileName}.`);
+            fs.unlink(this.fileName, (unlinkErr: any) => {
+              if (unlinkErr) {
+                console.error(`Failed to delete file ${this.fileName}:`, unlinkErr);
+              } else {
+                console.log(`${this.fileName} deleted successfully due to gzip error.`);
+              }
+            });
+          }
+        } else {
+          throw err;
+        }
       });
     const ret = byline(readStream);
     if (!options?.parseJSON) return ret;

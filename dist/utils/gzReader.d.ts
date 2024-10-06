@@ -3,7 +3,8 @@ export declare class GzReader {
     fileContents: any;
     fileName: string;
     debug: boolean;
-    constructor(fileName: string, debug?: boolean);
+    deletePartialGz: boolean;
+    constructor(fileName: string, debug?: boolean, deletePartialGz?: boolean);
     toStream(options?: {
         parseJSON: boolean;
     }): ReadableStream;
