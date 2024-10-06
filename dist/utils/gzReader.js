@@ -48,7 +48,7 @@ class GzReader {
                     });
                 }
             }
-            throw err;
+            readStream.emit('error', err);
         });
         const ret = byline(readStream);
         if (!(options === null || options === void 0 ? void 0 : options.parseJSON))
