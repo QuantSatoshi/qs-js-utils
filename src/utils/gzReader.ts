@@ -22,10 +22,11 @@ export class GzReader {
     this.fileContents = fs.createReadStream(fileName);
   }
   toStream(options?: { parseJSON: boolean }): ReadableStream {
+    let ret: any;
     const readStream = this.fileContents
       .on('error', (err: any) => {
         console.error(`pipe read error ${this.fileName}`, err);
-        throw err;
+        if (ret) ret.emit('error', err); // Emit the error on the final output stream
       })
       .pipe(this.unzip)
       .on('error', (err: any) => {
@@ -42,9 +43,9 @@ export class GzReader {
             });
           }
         }
-        readStream.emit('error', err);
+        if (ret) ret.emit('error', err); // Emit the error on the final output stream
       });
-    const ret = byline(readStream);
+    ret = byline(readStream);
     if (!options?.parseJSON) return ret;
     const jsonParseTransform = new Transform({
       objectMode: true,
