@@ -59,6 +59,11 @@ class GzReader {
                 done(null, JSON.parse(data.toString('utf8')));
             },
         });
+        // Propagate any errors that occur in the JSON parsing stage
+        jsonParseTransform.on('error', (err) => {
+            console.error(`JSON parsing error in ${this.fileName}`, err);
+            ret.emit('error', err); // Emit the error from the JSON stream
+        });
         return ret.pipe(jsonParseTransform);
     }
     readStream(onData) {
