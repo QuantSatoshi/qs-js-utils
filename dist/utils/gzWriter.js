@@ -56,6 +56,9 @@ class GzWriter {
     writeMany(data) {
         return __awaiter(this, void 0, void 0, function* () {
             this.writing = true;
+            if (data.length > 500000) {
+                console.warn(`warning writeMany cannot write too long data, because it may trigger max string length error`);
+            }
             if (!this.gz.write(data.map((row) => autoStringify(row)).join('\n') + '\n')) {
                 yield new Promise((resolve) => this.gz.once('drain', resolve));
                 this.writing = false;
