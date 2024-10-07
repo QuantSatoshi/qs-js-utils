@@ -1,6 +1,6 @@
 {
   "name": "qs-js-utils",
-  "version": "0.0.47",
+  "version": "0.0.48",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -29,7 +29,7 @@
   "author": "QS",
   "license": "ISC",
   "dependencies": {
-    "byline": "^5.0.0"
+    "split2": "4.2.0"
   },
   "devDependencies": {
     "@ava/typescript": "^3.0.1",

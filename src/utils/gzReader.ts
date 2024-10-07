@@ -3,7 +3,7 @@ import { Transform } from 'stream';
 const fs = require('fs');
 const zlib = require('zlib');
 const readline = require('readline');
-const byline = require('byline');
+const split = require('split2');
 
 export class GzReader {
   unzip = zlib.createGunzip();
@@ -22,11 +22,11 @@ export class GzReader {
     this.fileContents = fs.createReadStream(fileName);
   }
   toStream(options?: { parseJSON: boolean }): ReadableStream {
-    let ret: any;
+    let lineReader: any;
     const readStream = this.fileContents
       .on('error', (err: any) => {
         console.error(`pipe read error ${this.fileName}`, err);
-        if (ret) ret.emit('error', err); // Emit the error on the final output stream
+        if (lineReader) lineReader.emit('error', err); // Emit the error on the final output stream
       })
       .pipe(this.unzip)
       .on('error', (err: any) => {
@@ -43,23 +43,35 @@ export class GzReader {
             });
           }
         }
-        if (ret) ret.emit('error', err); // Emit the error on the final output stream
+        if (lineReader) lineReader.emit('error', err); // Emit the error on the final output stream
       });
-    ret = byline(readStream);
-    if (!options?.parseJSON) return ret;
+    lineReader = readStream.pipe(split());
+
+    if (!options?.parseJSON) return lineReader;
     const jsonParseTransform = new Transform({
       objectMode: true,
       transform: (data, _, done) => {
-        done(null, JSON.parse(data.toString('utf8')));
+        if (!data) {
+          return done(null, null);
+        }
+        try {
+          // Attempt to parse the JSON
+          const parsedData = JSON.parse(data.toString('utf8'));
+          done(null, parsedData); // Pass parsed data to next step in the stream
+        } catch (err) {
+          // If parsing fails, pass the error to the callback
+          done(new Error(`Failed to parse JSON: ${err}`));
+        }
       },
     });
     // Propagate any errors that occur in the JSON parsing stage
     jsonParseTransform.on('error', (err) => {
       console.error(`JSON parsing error in ${this.fileName}`, err);
-      ret.emit('error', err); // Emit the error from the JSON stream
+      // lineReader.emit('error', err); // Emit the error from the JSON stream
     });
 
-    return ret.pipe(jsonParseTransform);
+    lineReader = lineReader.pipe(jsonParseTransform);
+    return lineReader;
   }
 
   async readStream(onData: (data: string) => any) {

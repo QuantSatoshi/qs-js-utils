@@ -14,7 +14,7 @@ const stream_1 = require("stream");
 const fs = require('fs');
 const zlib = require('zlib');
 const readline = require('readline');
-const byline = require('byline');
+const split = require('split2');
 class GzReader {
     constructor(fileName, debug = false, deletePartialGz = false) {
         this.unzip = zlib.createGunzip();
@@ -27,12 +27,12 @@ class GzReader {
         this.fileContents = fs.createReadStream(fileName);
     }
     toStream(options) {
-        let ret;
+        let lineReader;
         const readStream = this.fileContents
             .on('error', (err) => {
             console.error(`pipe read error ${this.fileName}`, err);
-            if (ret)
-                ret.emit('error', err); // Emit the error on the final output stream
+            if (lineReader)
+                lineReader.emit('error', err); // Emit the error on the final output stream
         })
             .pipe(this.unzip)
             .on('error', (err) => {
@@ -50,24 +50,36 @@ class GzReader {
                     });
                 }
             }
-            if (ret)
-                ret.emit('error', err); // Emit the error on the final output stream
+            if (lineReader)
+                lineReader.emit('error', err); // Emit the error on the final output stream
         });
-        ret = byline(readStream);
+        lineReader = readStream.pipe(split());
         if (!(options === null || options === void 0 ? void 0 : options.parseJSON))
-            return ret;
+            return lineReader;
         const jsonParseTransform = new stream_1.Transform({
             objectMode: true,
             transform: (data, _, done) => {
-                done(null, JSON.parse(data.toString('utf8')));
+                if (!data) {
+                    return done(null, null);
+                }
+                try {
+                    // Attempt to parse the JSON
+                    const parsedData = JSON.parse(data.toString('utf8'));
+                    done(null, parsedData); // Pass parsed data to next step in the stream
+                }
+                catch (err) {
+                    // If parsing fails, pass the error to the callback
+                    done(new Error(`Failed to parse JSON: ${err}`));
+                }
             },
         });
         // Propagate any errors that occur in the JSON parsing stage
         jsonParseTransform.on('error', (err) => {
             console.error(`JSON parsing error in ${this.fileName}`, err);
-            ret.emit('error', err); // Emit the error from the JSON stream
+            // lineReader.emit('error', err); // Emit the error from the JSON stream
         });
-        return ret.pipe(jsonParseTransform);
+        lineReader = lineReader.pipe(jsonParseTransform);
+        return lineReader;
     }
     readStream(onData) {
         return __awaiter(this, void 0, void 0, function* () {
